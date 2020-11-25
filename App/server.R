@@ -2,7 +2,7 @@ library(shiny)
 library(googleVis)
 source("../Scripts/data_preparation.R")
 
-setwd("C:/Users/Jordan/Desktop/Cours/ING5/Data analytics/Airbnb-Analysis-ECE")
+setwd("C:/Users/Jonat/OneDrive/Bureau/ECE ING5/Data Analytics/Our_Project/Airbnb-Analysis-ECE")
 
 listings <- get_cleansed_df()
 
