@@ -5,13 +5,21 @@ shinyUI(fluidPage(
               tabPanel("Analysis 1 : Comparing cities",
                        sidebarLayout(
                          sidebarPanel(
+                           titlePanel("Desired Choices"),
                            uiOutput("cities1"),
                            uiOutput("features1"),
-                           uiOutput("more_features1")
+                           uiOutput("more_features1"),
+                           dateRangeInput('dateRange',
+                                          label = 'Date range input: yyyy-mm-dd',
+                                          # start = min(listings$date), end = max(listings$date)
+                           ),
+                           uiOutput("plot_type"),
                          ),
                          mainPanel(
                            h3("Comparing"),
-                           textOutput("selected_cities1")
+                           textOutput("selected_cities1"),
+                           textOutput("selecteddd"),
+                           plotOutput("output_plot")
                          )
                        )
               ),
