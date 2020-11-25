@@ -10,10 +10,11 @@ shinyUI(fluidPage(
                            uiOutput("cities1"),
                            uiOutput("features1"),
                            uiOutput("more_features1"),
-                           dateRangeInput('dateRange',
-                                          label = 'Date range input: yyyy-mm-dd',
-                                          start = uiOutput("min_date"), end = uiOutput("max_date")
-                           ),
+                           # dateRangeInput('dateRange',
+                           #                label = 'Date range input: yyyy-mm-dd',
+                           #                start = uiOutput("min_date"), end = uiOutput("max_date")
+                           # ),
+                           uiOutput("date_range"),
                            uiOutput("min_date"),
                            uiOutput("plot_type"),
                          ),
@@ -21,7 +22,11 @@ shinyUI(fluidPage(
                            h3("Comparing"),
                            textOutput("selected_cities1"),
                            textOutput("selecteddd"),
-                           plotOutput("output_plot")
+                           textOutput("date_range_text"),
+                           textOutput("start_date"),
+                           textOutput("end_date"),
+                           plotOutput("output_plot"),
+                           textOutput("selected_plot_type"),
                          )
                        )
               ),
