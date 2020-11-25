@@ -1,7 +1,9 @@
 library(shiny)
 library(leaflet)
+#source("./Scripts/data_preparation.R")
 source("../Scripts/data_preparation.R")
 
+#setwd("C:/Users/Jordan/Desktop/Cours/ING5/Data analytics/Airbnb-Analysis-ECE")
 setwd("C:/Users/Jonat/OneDrive/Bureau/ECE ING5/Data Analytics/Our_Project/Airbnb-Analysis-ECE")
 
 listings <- get_cleansed_df()
@@ -63,14 +65,14 @@ server <- function(input, output) {
                 selected = NULL)
   })
   
-  output$output_plot <- renderPlot({
-    
-    listings_selected_city <- listings[which(listings$city == input$cities1),]
-    
-    ggplot(listings_selected_city, aes(city, availability_30)) + geom_boxplot(aes(colour = "red"), outlier.shape = NA) +
-      scale_y_continuous(limits = quantile(listings_selected_city$availability_30, c(0.1, 0.9), na.rm = T))
-    
-  })  
+  # output$output_plot <- renderPlot({
+  #   
+  #   listings_selected_city <- listings[which(listings$city == input$cities1),]
+  #   
+  #   ggplot(listings_selected_city, aes(city, availability_30)) + geom_boxplot(aes(colour = "red"), outlier.shape = NA) +
+  #     scale_y_continuous(limits = quantile(listings_selected_city$availability_30, c(0.1, 0.9), na.rm = T))
+  #   
+  # })  
   
   
   ########################################################################
