@@ -5,16 +5,23 @@ shinyUI(fluidPage(
               tabPanel("Analysis 1 : Comparing cities",
                        sidebarLayout(
                          sidebarPanel(
-                           selectInput("city", 
-                                       h3("Select cities:"), 
-                                       choices = list("Bordeaux" = "bordeaux", 
-                                                      "Lyon" = "lyon"
-                                       ),
-                                       selected = "bordeaux")
-                         ),
-                         mainPanel(
-                           h3("Comparing")
-                         )
+                           titlePanel("Desired Choices"),
+                           
+                             uiOutput("cities1"),
+                             
+                             uiOutput("features"),
+                              
+                             dateRangeInput('dateRange',
+                                            label = 'Date range input: yyyy-mm-dd',
+                                            # start = mindate, end = maxdate
+                             ),
+                             
+                             uiOutput("another_features"),
+                           
+                           ),
+                           mainPanel(
+                             h3("Comparing")
+                           )
                        )
               ),
               tabPanel("Analysis 2 ; Deep dive into a city",
@@ -36,4 +43,4 @@ shinyUI(fluidPage(
 ))
 
 #library(shiny)
-#runApp("C:/Users/Jordan/Desktop/Cours/ING5/Data analytics/Airbnb-Analysis-ECE/App")
+#runApp("C:/Users/Jonat/OneDrive/Bureau/ECE ING5/Data Analytics/Our_Project/Airbnb-Analysis-ECE/App")
