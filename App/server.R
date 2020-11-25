@@ -1,5 +1,6 @@
 library(shiny)
 library(leaflet)
+library(MASS)
 source("../Scripts/data_preparation.R")
 
 setwd("C:/Users/Jonat/OneDrive/Bureau/ECE ING5/Data Analytics/Our_Project/Airbnb-Analysis-ECE")
@@ -13,11 +14,24 @@ mindate <- min(listings$date)
 maxdate <- max(listings$date)
 #2020-09-19
 
+temp <- listings %>%
+  group_by(city)%>%
+  summarise(average_availability_30=mean(availability_30), 
+            median_availability_30=median(availability_30),
+            average_revenue_30=mean(revenue_30), 
+            median_revenue_30=median(revenue_30),
+            average_price=mean(price), 
+            median_price=median(price))
+
+listings <- listings %>% left_join(temp, by = c("city" = "city"))
+print(listings)
+
 server <- function(input, output) {
 
   ########################################################################
   ############################## Tab 1 ###################################
   ########################################################################
+  
   output$cities1 <- renderUI({
     checkboxGroupInput("cities1", "Select cities :", choices = cities, selected = NULL)
   })
@@ -45,6 +59,14 @@ server <- function(input, output) {
                 selected = NULL)
   })
   
+  output$min_date <- renderText({
+    paste(mindate)
+  })
+  
+  output$max_date <- renderText({
+    paste(maxdate)
+  })
+  
   output$dateRangeText  <- renderText({
     paste("input$dateRange is", 
           paste(as.character(input$dateRange), collapse = " to ", start = mindate, end = maxdate)
@@ -57,7 +79,7 @@ server <- function(input, output) {
                                "Average" = "average",
                                "Median" = "median",
                                "Histogram" = "histogram",
-                               "Density" = "Density",
+                               "Density" = "density",
                                "Boxplot" = "boxplot"
                 ),
                 selected = NULL)
@@ -66,9 +88,43 @@ server <- function(input, output) {
   output$output_plot <- renderPlot({
     
     listings_selected_city <- listings[which(listings$city == input$cities1),]
+
+ 
+    p <- ggplot(listings_selected_city,aes(x=availability_30,group=city,fill=city))+
+      geom_histogram(position="dodge",binwidth=0.75)
+    plot(p)
     
-    ggplot(listings_selected_city, aes(city, availability_30)) + geom_boxplot(aes(colour = "red"), outlier.shape = NA) +
-      scale_y_continuous(limits = quantile(listings_selected_city$availability_30, c(0.1, 0.9), na.rm = T))
+    
+    if((input$type_plot == "histogram") && (input$feature == "availability_30")){
+      p2 <-ggplot( listings_selected_city, aes(availability_30)) +
+        geom_histogram(aes(color = city, fill = city),
+                       position = "identity", bins = 30, alpha = 0.4) +
+        scale_color_manual(values = c("#00AFBB", "#E7B800")) +
+        scale_fill_manual(values = c("#00AFBB", "#E7B800"))
+      plot(p2)
+      
+    }
+    
+
+    
+    if((input$type_plot == "density") && (input$feature == "revenue_30")){
+      p2 <- ggplot(listings_selected_city, aes(revenue_30, group=city, fill=city)) +
+        geom_density(adjust=1.5, alpha=.4)
+      plot(p2)
+    }
+      
+    
+    # ggplot(listings_selected_city, aes(revenue_30))+
+    #   geom_density(color="darkblue", fill="lightblue")
+    
+    if((input$type_plot == "average") && (input$feature == "availability_30")){
+      ggplot(listings_selected_city, aes(city, average_availability_30)) + geom_boxplot(aes(colour = "red"), outlier.shape = NA) +
+        scale_y_continuous(limits = quantile(listings_selected_city$average_availability_30, c(0.1, 0.9), na.rm = T))
+    }
+    if((input$type_plot == "average" && input$feature == "revenue_30")){
+      ggplot(listings_selected_city, aes(city, average_revenue_30)) + geom_boxplot(aes(colour = "red"), outlier.shape = NA) +
+        scale_y_continuous(limits = quantile(listings_selected_city$average_revenue_30, c(0.1, 0.9), na.rm = T))
+    }
     
   })  
   

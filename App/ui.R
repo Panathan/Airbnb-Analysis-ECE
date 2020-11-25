@@ -12,8 +12,9 @@ shinyUI(fluidPage(
                            uiOutput("more_features1"),
                            dateRangeInput('dateRange',
                                           label = 'Date range input: yyyy-mm-dd',
-                                          # start = min(listings$date), end = max(listings$date)
+                                          start = uiOutput("min_date"), end = uiOutput("max_date")
                            ),
+                           uiOutput("min_date"),
                            uiOutput("plot_type"),
                          ),
                          mainPanel(
