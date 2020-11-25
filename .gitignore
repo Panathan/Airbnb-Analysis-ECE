@@ -40,3 +40,6 @@ vignettes/*.pdf
 
 # Data
 Data/data_cleansed/
+
+# Working directory change
+Scripts/data_preparation

@@ -2,7 +2,7 @@ library(shiny)
 library(leaflet)
 source("../Scripts/data_preparation.R")
 
-setwd("C:/Users/Jordan/Desktop/Cours/ING5/Data analytics/Airbnb-Analysis-ECE")
+setwd("C:/Users/Jonat/OneDrive/Bureau/ECE ING5/Data Analytics/Our_Project/Airbnb-Analysis-ECE")
 
 listings <- get_cleansed_df()
 
@@ -21,7 +21,6 @@ server <- function(input, output) {
   output$cities1 <- renderUI({
     checkboxGroupInput("cities1", "Select cities :", choices = cities, selected = NULL)
   })
-  
   output$selected_cities1 <- renderText({
     paste("You have selected :",paste(input$cities1, collapse = ", "))
   })
@@ -45,6 +44,34 @@ server <- function(input, output) {
                 ),
                 selected = NULL)
   })
+  
+  output$dateRangeText  <- renderText({
+    paste("input$dateRange is", 
+          paste(as.character(input$dateRange), collapse = " to ", start = mindate, end = maxdate)
+    )
+  })
+  
+  output$plot_type <- renderUI({
+    selectInput("type_plot", "Select aggregation type:",
+                choices = list("None" = "NULL",
+                               "Average" = "average",
+                               "Median" = "median",
+                               "Histogram" = "histogram",
+                               "Density" = "Density",
+                               "Boxplot" = "boxplot"
+                ),
+                selected = NULL)
+  })
+  
+  output$output_plot <- renderPlot({
+    
+    listings_selected_city <- listings[which(listings$city == input$cities1),]
+    
+    ggplot(listings_selected_city, aes(city, availability_30)) + geom_boxplot(aes(colour = "red"), outlier.shape = NA) +
+      scale_y_continuous(limits = quantile(listings_selected_city$availability_30, c(0.1, 0.9), na.rm = T))
+    
+  })  
+  
   
   ########################################################################
   ############################## Tab 2 ###################################
