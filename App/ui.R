@@ -6,6 +6,7 @@ shinyUI(fluidPage(
                        sidebarLayout(
                          sidebarPanel(
                            titlePanel("Desired Choices"),
+<<<<<<< Updated upstream
                            
                              uiOutput("cities1"),
                              
@@ -22,6 +23,20 @@ shinyUI(fluidPage(
                            mainPanel(
                              h3("Comparing")
                            )
+=======
+                           uiOutput("cities1"),
+                           uiOutput("features1"),
+                           uiOutput("more_features1"),
+                           dateRangeInput('dateRange',
+                                          label = 'Date range input: yyyy-mm-dd',
+                                          # start = mindate, end = maxdate
+                           )
+                         ),
+                         mainPanel(
+                           h3("Comparing"),
+                           textOutput("selected_cities1")
+                         )
+>>>>>>> Stashed changes
                        )
               ),
               tabPanel("Analysis 2 ; Deep dive into a city",

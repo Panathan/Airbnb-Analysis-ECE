@@ -34,8 +34,24 @@ server <- function(input, output) {
   #   }
   
   
+<<<<<<< Updated upstream
  
   
+=======
+  output$dateRangeText  <- renderText({
+    paste("input$dateRange is", 
+          paste(as.character(input$dateRange), collapse = " to ", start = mindate, end = maxdate)
+    )
+  })
+  
+  ########################################################################
+  ############################## Tab 2 ###################################
+  ########################################################################
+    
+  output$cities2 <- renderUI({
+    selectInput("city2", "Select a city :", choices = cities, selected = NULL)
+  })
+>>>>>>> Stashed changes
   
   output$dateRangeText  <- renderText({
     paste("input$dateRange is", 
