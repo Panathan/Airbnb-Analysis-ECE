@@ -20,7 +20,6 @@ shinyUI(fluidPage(
                          mainPanel(
                            h3("Comparing"),
                            textOutput("selected_cities1"),
-                           textOutput("selecteddd"),
                            plotOutput("output_plot")
                          )
                        )
