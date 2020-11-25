@@ -32,4 +32,4 @@ shinyUI(fluidPage(
 ))
 
 #library(shiny)
-#runApp("C:/Users/Jordan/Desktop/Cours/ING5/Data analytics/Airbnb-Analysis-ECE/App")
+#runApp("C:/Users/Jonat/OneDrive/Bureau/ECE ING5/Data Analytics/Our_Project/Airbnb-Analysis-ECE")
