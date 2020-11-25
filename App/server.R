@@ -1,5 +1,5 @@
 library(shiny)
-library(googleVis)
+library(leaflet)
 source("../Scripts/data_preparation.R")
 
 setwd("C:/Users/Jordan/Desktop/Cours/ING5/Data analytics/Airbnb-Analysis-ECE")
@@ -21,6 +21,7 @@ server <- function(input, output) {
   output$cities1 <- renderUI({
     checkboxGroupInput("cities1", "Select cities :", choices = cities, selected = NULL)
   })
+  
   output$selected_cities1 <- renderText({
     paste("You have selected :",paste(input$cities1, collapse = ", "))
   })
@@ -36,7 +37,7 @@ server <- function(input, output) {
   
   output$more_features1 <- renderUI({
     selectInput("more_feature", "Select another feature :",
-                choices = list(" " = "NULL",
+                choices = list("None" = "NULL",
                                "Neighborhood" = "neighbourhood_cleansed",
                                "Property type" = "property_type",
                                "Room type" = "room_type",
@@ -50,11 +51,16 @@ server <- function(input, output) {
   ########################################################################
     
   output$cities2 <- renderUI({
-    selectInput("city2", "Select a city :", choices = cities, selected = NULL)
+    selectInput("city2", "Select a city :", choices = cities, selected = 'bordeaux')
   })
   
   output$selected_city2<- renderText({
     paste("You have selected :",paste(input$city2))
+  })
+  
+  data_tab2 <- reactive({
+    listings %>% 
+      filter(city == input$city2)
   })
   
   output$features2 <- renderUI({
@@ -68,12 +74,20 @@ server <- function(input, output) {
   
   output$more_features2 <- renderUI({
     selectInput("more_feature2", "Select another feature :",
-                choices = list(" " = "NULL",
+                choices = list("None" = "NULL",
                                "Neighborhood" = "neighbourhood_cleansed",
                                "Property type" = "property_type",
                                "Room type" = "room_type",
                                "Number of bedrooms" = "bedrooms"
                 ),
                 selected = NULL)
+  })
+
+  output$map <- renderLeaflet({
+      listings_selected_city <- listings[which(listings$city == input$city2),]
+      listings_selected_city %>%
+        leaflet() %>% 
+        addTiles() %>%
+        addMarkers(clusterOptions = markerClusterOptions())
   })
 }

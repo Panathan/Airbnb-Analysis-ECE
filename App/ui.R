@@ -1,4 +1,5 @@
 library(shiny)
+library(leaflet)
 shinyUI(fluidPage(
   titlePanel("Jonathan BOUTAKHOT & Jordan DO BARREIRO Airbnb analysis"),
   tabsetPanel(type = "tabs",
@@ -23,8 +24,7 @@ shinyUI(fluidPage(
                            uiOutput("more_features2")
                          ),
                          mainPanel(
-                           h3("map"),
-                           textOutput("selected_city2")
+                           leafletOutput("map")
                          )
                        )
               )
