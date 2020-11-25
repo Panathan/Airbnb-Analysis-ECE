@@ -5,30 +5,26 @@ shinyUI(fluidPage(
               tabPanel("Analysis 1 : Comparing cities",
                        sidebarLayout(
                          sidebarPanel(
-                           selectInput("city", 
-                                       h3("Select cities:"), 
-                                       choices = list("Bordeaux" = "bordeaux", 
-                                                      "Lyon" = "lyon"
-                                       ),
-                                       selected = "bordeaux")
+                           uiOutput("cities1"),
+                           uiOutput("features1"),
+                           uiOutput("more_features1")
                          ),
                          mainPanel(
-                           h3("Comparing")
+                           h3("Comparing"),
+                           textOutput("selected_cities1")
                          )
                        )
               ),
               tabPanel("Analysis 2 ; Deep dive into a city",
                        sidebarLayout(
                          sidebarPanel(
-                           selectInput("city", 
-                                       h3("Select city:"), 
-                                       choices = list("Bordeaux" = "bordeaux", 
-                                                      "Lyon" = "lyon"
-                                       ),
-                                       selected = "bordeaux")
+                           uiOutput("cities2"),
+                           uiOutput("features2"),
+                           uiOutput("more_features2")
                          ),
                          mainPanel(
-                           h3("map")
+                           h3("map"),
+                           textOutput("selected_city2")
                          )
                        )
               )
