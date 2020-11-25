@@ -25,7 +25,6 @@ temp <- listings %>%
             median_price=median(price))
 
 listings <- listings %>% left_join(temp, by = c("city" = "city"))
-print(listings)
 
 server <- function(input, output) {
 
@@ -37,7 +36,7 @@ server <- function(input, output) {
     checkboxGroupInput("cities1", "Select cities :", choices = cities, selected = NULL)
   })
   output$selected_cities1 <- renderText({
-    paste("You have selected :",paste(input$cities1, collapse = ", "))
+    paste("You have selected the following cities for comparisons :",paste(input$cities1, collapse = ", "))
   })
   
   output$features1 <- renderUI({
@@ -101,44 +100,40 @@ server <- function(input, output) {
   output$output_plot <- renderPlot({
     
     listings_selected_city <- listings[which(listings$city == input$cities1),]
-
- 
-    p <- ggplot(listings_selected_city,aes(x=availability_30,group=city,fill=city))+
-      geom_histogram(position="dodge",binwidth=0.75)
-    plot(p)
     
-
-    if((input$type_plot == "histogram") && (input$feature == "availability_30")){
-      p2 <-ggplot( listings_selected_city, aes(availability_30)) +
-        geom_histogram(aes(color = city, fill = city),
-                       position = "identity", bins = 30, alpha = 0.4) +
-        scale_color_manual(values = c("#00AFBB", "#E7B800")) +
-        scale_fill_manual(values = c("#00AFBB", "#E7B800"))
-      plot(p2)
-
+    if(!is.null(input$cities1)){
+      if((input$type_plot == "histogram") && (input$feature == "availability_30")){ p <- ggplot(listings_selected_city,aes(x=availability_30,group=city,fill=city))+geom_histogram(position="dodge",binwidth=1)
+        plot(p)}
+      if((input$type_plot == "histogram") && (input$feature == "price_30")){ p <- ggplot(listings_selected_city,aes(x=price,group=city,fill=city))+geom_histogram(position="dodge",binwidth=1)
+        plot(p)}
+      if((input$type_plot == "histogram") && (input$feature == "revenue_30")){ p <- ggplot(listings_selected_city,aes(x=revenue_30,group=city,fill=city))+geom_histogram(position="dodge",binwidth=2)
+        plot(p)}
+      if((input$type_plot == "density") && (input$feature == "availability_30")){ p <- ggplot(listings_selected_city, aes(availability_30, group=city, fill=city)) +geom_density(adjust=1.5, alpha=.4)
+        plot(p)}
+      if((input$type_plot == "density") && (input$feature == "price_30")){ p <- ggplot(listings_selected_city, aes(price, group=city, fill=city)) +geom_density(adjust=1.5, alpha=.4)
+        plot(p)}
+      if((input$type_plot == "density") && (input$feature == "revenue_30")){ p <- ggplot(listings_selected_city, aes(revenue_30, group=city, fill=city)) +geom_density(adjust=1.5, alpha=.4)
+        plot(p)}
+      if((input$type_plot == "average") && (input$feature == "availability_30")){ p <- ggplot(listings_selected_city, aes(city, average_availability_30)) + geom_boxplot(aes(colour = "red"), outlier.shape = NA) +scale_y_continuous(limits = quantile(listings_selected_city$average_availability_30, c(0.1, 0.9), na.rm = T))
+        plot(p)}
+      if((input$type_plot == "average") && (input$feature == "revenue_30")){ p <- ggplot(listings_selected_city, aes(city, average_revenue_30)) + geom_boxplot(aes(colour = "red"), outlier.shape = NA) +scale_y_continuous(limits = quantile(listings_selected_city$average_revenue_30, c(0.1, 0.9), na.rm = T))
+        plot(p)}
+      if((input$type_plot == "average") && (input$feature == "price_30")){ p <- ggplot(listings_selected_city, aes(city, average_price)) + geom_boxplot(aes(colour = "red"), outlier.shape = NA) +scale_y_continuous(limits = quantile(listings_selected_city$average_price, c(0.1, 0.9), na.rm = T))
+        plot(p)}
+      if((input$type_plot == "median") && (input$feature == "availability_30")){ p <- ggplot(listings_selected_city, aes(city, median_availability_30)) + geom_boxplot(aes(colour = "red"), outlier.shape = NA) +scale_y_continuous(limits = quantile(listings_selected_city$median_availability_30, c(0.1, 0.9), na.rm = T))
+        plot(p)}
+      if((input$type_plot == "median") && (input$feature == "revenue_30")){ p <- ggplot(listings_selected_city, aes(city, median_revenue_30)) + geom_boxplot(aes(colour = "red"), outlier.shape = NA) +scale_y_continuous(limits = quantile(listings_selected_city$median_revenue_30, c(0.1, 0.9), na.rm = T))
+        plot(p)}
+      if((input$type_plot == "median") && (input$feature == "price_30")){ p <- ggplot(listings_selected_city, aes(city, median_price)) + geom_boxplot(aes(colour = "red"), outlier.shape = NA) +scale_y_continuous(limits = quantile(listings_selected_city$median_price, c(0.1, 0.9), na.rm = T))
+        plot(p)}
+      if((input$type_plot == "boxplot") && (input$feature == "availability_30")){ p <- ggplot(listings_selected_city, aes(city, availability_30)) + geom_boxplot(aes(colour = "red"), outlier.shape = NA) +scale_y_continuous(limits = quantile(listings_selected_city$availability_30, c(0.1, 0.9), na.rm = T))
+        plot(p)}
+      if((input$type_plot == "boxplot") && (input$feature == "revenue_30")){ p <- ggplot(listings_selected_city, aes(city, revenue_30)) + geom_boxplot(aes(colour = "red"), outlier.shape = NA) +scale_y_continuous(limits = quantile(listings_selected_city$revenue_30, c(0.1, 0.9), na.rm = T))
+        plot(p)}
+      if((input$type_plot == "boxplot") && (input$feature == "price_30")){ p <- ggplot(listings_selected_city, aes(city, price)) + geom_boxplot(aes(colour = "red"), outlier.shape = NA) +scale_y_continuous(limits = quantile(listings_selected_city$price, c(0.1, 0.9), na.rm = T))
+        plot(p)
+      }
     }
-
-
-
-    if((input$type_plot == "density") && (input$feature == "revenue_30")){
-      p2 <- ggplot(listings_selected_city, aes(revenue_30, group=city, fill=city)) +
-        geom_density(adjust=1.5, alpha=.4)
-      plot(p2)
-    }
-      
-    
-    ggplot(listings_selected_city, aes(revenue_30))+
-    geom_density(color="darkblue", fill="lightblue")
-
-    if((input$type_plot == "average") && (input$feature == "availability_30")){
-      ggplot(listings_selected_city, aes(city, average_availability_30)) + geom_boxplot(aes(colour = "red"), outlier.shape = NA) +
-        scale_y_continuous(limits = quantile(listings_selected_city$average_availability_30, c(0.1, 0.9), na.rm = T))
-    }
-    if((input$type_plot == "average") && (input$feature == "revenue_30")){
-      ggplot(listings_selected_city, aes(city, average_revenue_30)) + geom_boxplot(aes(colour = "red"), outlier.shape = NA) +
-        scale_y_continuous(limits = quantile(listings_selected_city$average_revenue_30, c(0.1, 0.9), na.rm = T))
-    }
-    
   })  
   
   
