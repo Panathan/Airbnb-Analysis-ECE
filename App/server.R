@@ -452,10 +452,10 @@ server <- function(input, output) {
             if(input$more_feature2 == "bedrooms"){
               p <- ggplot(listings_selected_city2(), aes(bedrooms, availability_30)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(listings_selected_city2()$availability_30, c(0.1, 0.9), na.rm = T))
               plot(p)}
-            if(input$more_featur2e == "room_type"){
+            if(input$more_feature2 == "room_type"){
               p <- ggplot(listings_selected_city2(), aes(room_type, availability_30)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(listings_selected_city2()$availability_30, c(0.1, 0.9), na.rm = T))
               plot(p)}
-            if(input$more_feature == "property_type"){
+            if(input$more_feature2 == "property_type"){
               p <- ggplot(listings_selected_city2(), aes(property_type, availability_30)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(listings_selected_city2()$availability_30, c(0.1, 0.9), na.rm = T))
               plot(p)}
             if(input$more_feature2 == "neighbourhood_cleansed"){
