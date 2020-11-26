@@ -355,6 +355,19 @@ server <- function(input, output) {
       filter(date >= input$date_range2[1] & date <= input$date_range2[2])
   })
   
+  temp_bedrooms2 <- reactive({listings_selected_city2() %>% group_by(city, bedrooms)%>%
+      summarise(average_availability=mean(availability_30), median_availability=median(availability_30), average_revenue=mean(revenue_30), median_revenue=median(revenue_30), average_price=mean(price), median_price=median(price))
+  })
+  temp_room_type2 <- reactive({listings_selected_city2() %>% group_by(city, room_type)%>%
+      summarise(average_availability=mean(availability_30), median_availability=median(availability_30), average_revenue=mean(revenue_30), median_revenue=median(revenue_30), average_price=mean(price), median_price=median(price))
+  })
+  temp_property_type2 <- reactive({listings_selected_city2() %>% group_by(city, property_type)%>%
+      summarise(average_availability=mean(availability_30), median_availability=median(availability_30), average_revenue=mean(revenue_30), median_revenue=median(revenue_30), average_price=mean(price), median_price=median(price))
+  })
+  temp_neighbourhood_cleansed2 <- reactive({listings_selected_city2() %>% group_by(city, neighbourhood_cleansed)%>%
+      summarise(average_availability=mean(availability_30), median_availability=median(availability_30), average_revenue=mean(revenue_30), median_revenue=median(revenue_30), average_price=mean(price), median_price=median(price))
+  })
+  
   output$cities2 <- renderUI({
     selectInput("city2", "Select a city :", choices = cities, selected = 'bordeaux')
   })
@@ -432,6 +445,192 @@ server <- function(input, output) {
       plot(p)}
       if((input$type_plot2 == "boxplot") && (input$feature2 == "price_30")){ p <- ggplot(listings_selected_city2(), aes(city, price)) + geom_boxplot(aes(colour = "red"), outlier.shape = NA) +scale_y_continuous(limits = quantile(listings_selected_city2()$price, c(0.1, 0.9), na.rm = T))
       plot(p)}
+      
+      if(!is.null(input$more_feature2)){
+        if(input$feature2 == "availability_30"){
+          if(input$type_plot2 == "boxplot"){ 
+            if(input$more_feature2 == "bedrooms"){
+              p <- ggplot(listings_selected_city2(), aes(bedrooms, availability_30)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(listings_selected_city2()$availability_30, c(0.1, 0.9), na.rm = T))
+              plot(p)}
+            if(input$more_featur2e == "room_type"){
+              p <- ggplot(listings_selected_city2(), aes(room_type, availability_30)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(listings_selected_city2()$availability_30, c(0.1, 0.9), na.rm = T))
+              plot(p)}
+            if(input$more_feature == "property_type"){
+              p <- ggplot(listings_selected_city2(), aes(property_type, availability_30)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(listings_selected_city2()$availability_30, c(0.1, 0.9), na.rm = T))
+              plot(p)}
+            if(input$more_feature2 == "neighbourhood_cleansed"){
+              p <- ggplot(listings_selected_city2(), aes(neighbourhood_cleansed, availability_30)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(listings_selected_city2()$availability_30, c(0.1, 0.9), na.rm = T))
+              plot(p)}
+          }
+          # BON MAIS CHANGER L'APPARENCE
+          if(input$type_plot2 == "average") { 
+            if(input$more_feature2 == "bedrooms"){ p <- ggplot(temp_bedrooms2(), aes(bedrooms, average_availability)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(temp_bedrooms2()$average_availability, c(0.1, 0.9), na.rm = T))
+            plot(p)}
+            if(input$more_feature2 == "room_type"){ p <- ggplot(temp_room_type2(), aes(room_type, average_availability)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(temp_room_type2()$average_availability, c(0.1, 0.9), na.rm = T))
+            plot(p)}
+            if(input$more_feature2 == "property_type"){ p <- ggplot(temp_property_type2(), aes(property_type, average_availability)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(temp_property_type2()$average_availability, c(0.1, 0.9), na.rm = T))
+            plot(p)}
+            if(input$more_feature2 == "neighbourhood_cleansed"){ p <- ggplot(temp_neighbourhood_cleansed2(), aes(neighbourhood_cleansed, average_availability)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(temp_neighbourhood_cleansed2()$average_availability, c(0.1, 0.9), na.rm = T))
+            plot(p)}
+          }
+          # BON MAIS CHANGER L'APPARENCE
+          if(input$type_plot2 == "median") { 
+            if(input$more_feature2 == "bedrooms"){ p <- ggplot(temp_bedrooms2(), aes(bedrooms, median_availability)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(temp_bedrooms2()$median_availability, c(0.1, 0.9), na.rm = T))
+            plot(p)}
+            if(input$more_feature2 == "room_type"){ p <- ggplot(temp_room_type2(), aes(room_type, median_availability)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(temp_room_type2()$median_availability, c(0.1, 0.9), na.rm = T))
+            plot(p)}
+            if(input$more_feature2 == "property_type"){ p <- ggplot(temp_property_type2(), aes(property_type, median_availability)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(temp_property_type2()$median_availability, c(0.1, 0.9), na.rm = T))
+            plot(p)}
+            if(input$more_feature2== "neighbourhood_cleansed"){ p <- ggplot(temp_neighbourhood_cleansed2(), aes(neighbourhood_cleansed, median_availability)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(temp_neighbourhood_cleansed2()$median_availability, c(0.1, 0.9), na.rm = T))
+            plot(p)}
+          }
+          # PAS BON
+          if(input$type_plot2 == "density"){
+            if(input$more_feature2 == "bedrooms"){ p <- ggplot(listings_selected_city2(), aes(availability_30, group=city, fill=bedrooms)) + geom_density(adjust=1.5, alpha=.4)
+            plot(p)}
+            if(input$more_feature2 == "room_type"){ p <- ggplot(listings_selected_city2(), aes(availability_30, group=city, fill=room_type)) + geom_density(adjust=1.5, alpha=.4)
+            plot(p)}
+            if(input$more_feature2 == "property_type"){ p <- ggplot(listings_selected_city2(), aes(availability_30, group=city, fill=property_type)) + geom_density(adjust=1.5, alpha=.4)
+            plot(p)}
+            if(input$more_feature2 == "neighbourhood_cleansed"){ p <- ggplot(listings_selected_city2(), aes(availability_30, group=city, fill=neighbourhood_cleansed)) + geom_density(adjust=1.5, alpha=.4)
+            plot(p)}
+          }
+          
+          # PAS BON 
+          if(input$type_plot2 == "histogram"){
+            if(input$more_feature2 == "bedrooms"){ p <- ggplot(listings_selected_city2(),aes(x=availability_30,group=city,fill=bedrooms))+geom_histogram(position="dodge",binwidth=1)
+            plot(p)}
+            if(input$more_feature2 == "room_type"){ p <- ggplot(listings_selected_city2(),aes(x=availability_30,group=city,fill=room_type))+geom_histogram(position="dodge",binwidth=1)
+            plot(p)}
+            if(input$more_feature2 == "property_type"){ p <- ggplot(listings_selected_city2(),aes(x=availability_30,group=city,fill=property_type))+geom_histogram(position="dodge",binwidth=1)
+            plot(p)}
+            if(input$more_feature2 == "neighbourhood_cleansed"){ p <- ggplot(listings_selected_city2(),aes(x=availability_30,group=city,fill=neighbourhood_cleansed))+geom_histogram(position="dodge",binwidth=1)
+            plot(p)}
+          }
+        }
+        if(input$feature2 == "revenue_30"){
+          if(input$type_plot2 == "boxplot"){ 
+            if(input$more_feature2 == "bedrooms"){
+              p <- ggplot(listings_selected_city2(), aes(bedrooms, revenue_30)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(listings_selected_city2()$revenue_30, c(0.1, 0.9), na.rm = T))
+              plot(p)}
+            if(input$more_feature2 == "room_type"){
+              p <- ggplot(listings_selected_city2(), aes(room_type, revenue_30)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(listings_selected_city2()$revenue_30, c(0.1, 0.9), na.rm = T))
+              plot(p)}
+            if(input$more_feature2 == "property_type"){
+              p <- ggplot(listings_selected_city2(), aes(property_type, revenue_30)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(listings_selected_city2()$revenue_30, c(0.1, 0.9), na.rm = T))
+              plot(p)}
+            if(input$more_feature2 == "neighbourhood_cleansed"){
+              p <- ggplot(listings_selected_city2(), aes(neighbourhood_cleansed, revenue_30)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(listings_selected_city2()$revenue_30, c(0.1, 0.9), na.rm = T))
+              plot(p)}
+          }
+          # BON MAIS CHANGER L'APPARENCE
+          if(input$type_plot2 == "average") { 
+            if(input$more_feature2 == "bedrooms"){ p <- ggplot(temp_bedrooms2(), aes(bedrooms, average_revenue)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(temp_bedrooms2()$average_revenue, c(0.1, 0.9), na.rm = T))
+            plot(p)}
+            if(input$more_feature2 == "room_type"){ p <- ggplot(temp_room_type2(), aes(room_type, average_revenue)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(temp_room_type2()$average_revenue, c(0.1, 0.9), na.rm = T))
+            plot(p)}
+            if(input$more_feature2 == "property_type"){ p <- ggplot(temp_property_type2(), aes(property_type, average_revenue)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(temp_property_type2()$average_revenue, c(0.1, 0.9), na.rm = T))
+            plot(p)}
+            if(input$more_feature2 == "neighbourhood_cleansed"){ p <- ggplot(temp_neighbourhood_cleansed2(), aes(neighbourhood_cleansed, average_revenue)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(temp_neighbourhood_cleansed2()$average_revenue, c(0.1, 0.9), na.rm = T))
+            plot(p)}
+          }
+          # BON MAIS CHANGER L'APPARENCE
+          if(input$type_plot2 == "median") { 
+            if(input$more_feature2 == "bedrooms"){ p <- ggplot(temp_bedrooms2(), aes(bedrooms, median_revenue)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(temp_bedrooms2()$median_revenue, c(0.1, 0.9), na.rm = T))
+            plot(p)}
+            if(input$more_feature2 == "room_type"){ p <- ggplot(temp_room_type2(), aes(room_type, median_revenue)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(temp_room_type2()$median_revenue, c(0.1, 0.9), na.rm = T))
+            plot(p)}
+            if(input$more_feature2 == "property_type"){ p <- ggplot(temp_property_type2(), aes(property_type, median_revenue)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(temp_property_type2()$median_revenue, c(0.1, 0.9), na.rm = T))
+            plot(p)}
+            if(input$more_feature2 == "neighbourhood_cleansed"){ p <- ggplot(temp_neighbourhood_cleansed2(), aes(neighbourhood_cleansed, median_revenue)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(temp_neighbourhood_cleansed2()$median_revenue, c(0.1, 0.9), na.rm = T))
+            plot(p)}
+          }
+          # PAS BON
+          if(input$type_plot2 == "density"){
+            if(input$more_feature2 == "bedrooms"){ p <- ggplot(listings_selected_city2(), aes(revenue_30, group=city, fill=bedrooms)) + geom_density(adjust=1.5, alpha=.4)
+            plot(p)}
+            if(input$more_feature2 == "room_type"){ p <- ggplot(listings_selected_city2(), aes(revenue_30, group=city, fill=room_type)) + geom_density(adjust=1.5, alpha=.4)
+            plot(p)}
+            if(input$more_feature2 == "property_type"){ p <- ggplot(listings_selected_city2(), aes(revenue_30, group=city, fill=property_type)) + geom_density(adjust=1.5, alpha=.4)
+            plot(p)}
+            if(input$more_feature2 == "neighbourhood_cleansed"){ p <- ggplot(listings_selected_city2(), aes(revenue_30, group=city, fill=neighbourhood_cleansed)) + geom_density(adjust=1.5, alpha=.4)
+            plot(p)}
+          }
+          
+          # PAS BON 
+          if(input$type_plot2 == "histogram"){
+            if(input$more_feature2 == "bedrooms"){ p <- ggplot(listings_selected_city2(),aes(x=revenue_30,group=city,fill=bedrooms))+geom_histogram(position="dodge",binwidth=1)
+            plot(p)}
+            if(input$more_feature2 == "room_type"){ p <- ggplot(listings_selected_city2(),aes(x=revenue_30,group=city,fill=room_type))+geom_histogram(position="dodge",binwidth=1)
+            plot(p)}
+            if(input$more_feature2 == "property_type"){ p <- ggplot(listings_selected_city2(),aes(x=revenue_30,group=city,fill=property_type))+geom_histogram(position="dodge",binwidth=1)
+            plot(p)}
+            if(input$more_feature2 == "neighbourhood_cleansed"){ p <- ggplot(listings_selected_city2(),aes(x=revenue_30,group=city,fill=neighbourhood_cleansed))+geom_histogram(position="dodge",binwidth=1)
+            plot(p)}
+          }
+        }
+        if(input$feature2 == "price_30"){
+          if(input$type_plot2 == "boxplot"){ 
+            if(input$more_feature2 == "bedrooms"){
+              p <- ggplot(listings_selected_city2(), aes(bedrooms, price)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(listings_selected_city2()$price, c(0.1, 0.9), na.rm = T))
+              plot(p)}
+            if(input$more_feature2 == "room_type"){
+              p <- ggplot(listings_selected_city2(), aes(room_type, price)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(listings_selected_city2()$price, c(0.1, 0.9), na.rm = T))
+              plot(p)}
+            if(input$more_feature2 == "property_type"){
+              p <- ggplot(listings_selected_city2(), aes(property_type, price)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(listings_selected_city2()$price, c(0.1, 0.9), na.rm = T))
+              plot(p)}
+            if(input$more_feature2 == "neighbourhood_cleansed"){
+              p <- ggplot(listings_selected_city2(), aes(neighbourhood_cleansed, price)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(listings_selected_city2()$price, c(0.1, 0.9), na.rm = T))
+              plot(p)}
+          }
+          # BON MAIS CHANGER L'APPARENCE
+          if(input$type_plot2 == "average") { 
+            if(input$more_feature2 == "bedrooms"){ p <- ggplot(temp_bedrooms2(), aes(bedrooms, average_price)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(temp_bedrooms2()$average_price, c(0.1, 0.9), na.rm = T))
+            plot(p)}
+            if(input$more_feature2 == "room_type"){ p <- ggplot(temp_room_type2(), aes(room_type, average_price)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(temp_room_type2()$average_price, c(0.1, 0.9), na.rm = T))
+            plot(p)}
+            if(input$more_feature2 == "property_type"){ p <- ggplot(temp_property_type2(), aes(property_type, average_price)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(temp_property_type2()$average_price, c(0.1, 0.9), na.rm = T))
+            plot(p)}
+            if(input$more_feature2 == "neighbourhood_cleansed"){ p <- ggplot(temp_neighbourhood_cleansed2(), aes(neighbourhood_cleansed, average_price)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(temp_neighbourhood_cleansed2()$average_price, c(0.1, 0.9), na.rm = T))
+            plot(p)}
+          }
+          # BON MAIS CHANGER L'APPARENCE
+          if(input$type_plot2 == "median") { 
+            if(input$more_feature2 == "bedrooms"){ p <- ggplot(temp_bedrooms2(), aes(bedrooms, median_price)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(temp_bedrooms2()$median_price, c(0.1, 0.9), na.rm = T))
+            plot(p)}
+            if(input$more_feature2 == "room_type"){ p <- ggplot(temp_room_type2(), aes(room_type, median_price)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(temp_room_type2()$median_price, c(0.1, 0.9), na.rm = T))
+            plot(p)}
+            if(input$more_feature2 == "property_type"){ p <- ggplot(temp_property_type2(), aes(property_type, median_price)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(temp_property_type2()$median_price, c(0.1, 0.9), na.rm = T))
+            plot(p)}
+            if(input$more_feature2 == "neighbourhood_cleansed"){ p <- ggplot(temp_neighbourhood_cleansed2(), aes(neighbourhood_cleansed, median_price)) + geom_boxplot(aes(colour = city), outlier.shape = NA) + scale_y_continuous(limits = quantile(temp_neighbourhood_cleansed2()$median_price, c(0.1, 0.9), na.rm = T))
+            plot(p)}
+          }
+          # PAS BON
+          if(input$type_plot2 == "density"){
+            if(input$more_feature2 == "bedrooms"){ p <- ggplot(listings_selected_city2(), aes(price, group=city, fill=bedrooms)) + geom_density(adjust=1.5, alpha=.4)
+            plot(p)}
+            if(input$more_feature2 == "room_type"){ p <- ggplot(listings_selected_city2(), aes(price, group=city, fill=room_type)) + geom_density(adjust=1.5, alpha=.4)
+            plot(p)}
+            if(input$more_feature2 == "property_type"){ p <- ggplot(listings_selected_city2(), aes(price, group=city, fill=property_type)) + geom_density(adjust=1.5, alpha=.4)
+            plot(p)}
+            if(input$more_feature2 == "neighbourhood_cleansed"){ p <- ggplot(listings_selected_city2(), aes(price, group=city, fill=neighbourhood_cleansed)) + geom_density(adjust=1.5, alpha=.4)
+            plot(p)}
+          }
+          
+          # PAS BON 
+          if(input$type_plot2 == "histogram"){
+            if(input$more_feature2 == "bedrooms"){ p <- ggplot(listings_selected_city2(),aes(x=price,group=city,fill=bedrooms))+geom_histogram(position="dodge",binwidth=1)
+            plot(p)}
+            if(input$more_feature2 == "room_type"){ p <- ggplot(listings_selected_city2(),aes(x=price,group=city,fill=room_type))+geom_histogram(position="dodge",binwidth=1)
+            plot(p)}
+            if(input$more_feature2 == "property_type"){ p <- ggplot(listings_selected_city2(),aes(x=price,group=city,fill=property_type))+geom_histogram(position="dodge",binwidth=1)
+            plot(p)}
+            if(input$more_feature2 == "neighbourhood_cleansed"){ p <- ggplot(listings_selected_city2(),aes(x=price,group=city,fill=neighbourhood_cleansed))+geom_histogram(position="dodge",binwidth=1)
+            plot(p)}
+          }
+        }
+      }
     }
   })
   
