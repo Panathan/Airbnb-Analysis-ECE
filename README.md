@@ -11,7 +11,7 @@ This is a R Project done for the Data Analytics class
 library(shiny)
 setwd("~/YOUR_PATH/Airbnb-Analysis-ECE")
 ```
-  * In the file data_preparation.R, uncomment the line 83 "dl_data()"
+  * In the file /Scripts/data_preparation.R, uncomment the line 83 "dl_data()"
 3. Launch the App 
 ```
 runApp('App')
