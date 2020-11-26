@@ -9,9 +9,9 @@ shinyUI(fluidPage(
                            titlePanel("Desired Choices"),
                            uiOutput("cities1"),
                            uiOutput("features1"),
-                           uiOutput("more_features1"),
                            uiOutput("date_range"),
-                           uiOutput("plot_type")
+                           uiOutput("plot_type"),
+                           uiOutput("more_features1")
                          ),
                          mainPanel(
                            plotOutput("output_plot")
@@ -23,9 +23,9 @@ shinyUI(fluidPage(
                          sidebarPanel(
                            uiOutput("cities2"),
                            uiOutput("features2"),
-                           uiOutput("more_features2"),
                            uiOutput("date_range2"),
-                           uiOutput("plot_type2")
+                           uiOutput("plot_type2"),
+                           uiOutput("more_features2")
                          ),
                          mainPanel(
                            plotOutput("output_plot2"),
