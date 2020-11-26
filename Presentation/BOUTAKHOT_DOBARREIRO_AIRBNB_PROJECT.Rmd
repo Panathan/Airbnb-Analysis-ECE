@@ -65,13 +65,18 @@ We apply the filters, and then it is loaded
 
 ```
 
-![Tab 1 (Analysis 1 – Comparing cities)](img/capture.png)
-
+![Tab 1 (Analysis 1 – Comparing cities)](../Presentation/img/1.png)
+![Price over 30 days for multiple cities](../Presentation/img/2.png)
+![Price over 30 days for the same cities but we date range changed](../Presentation/img/3.png)
+![Availability over 30 days depending on the room type](../Presentation/img/4.png)
+![Revenue over 30 days](../Presentation/img/5.png)
 
 ## Insights inside a city
 
-![ Tab 2 (Analysis 2 – Deep dive into a city)](img/capture.png)
+![ Tab 2 (Analysis 2 – Deep dive into a city)](../Presentation/img/8.png)
 
+![Price over 30 days depending on the number of bedrooms](../Presentation/img/6.png)
+![Map changes after the date changes](../Presentation/img/7.png)
 
 ```{r pressure}
 
