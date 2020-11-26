@@ -1,6 +1,7 @@
-# Airbnb-Analysis-ECE
+### Airbnb-Analysis-ECE
 
-This is a R Project 
+This is a R Project done for the Data Analytics class
+
 ## How to get started and run the application
 
 1. Clone the repository and open it with Rstudio
@@ -19,3 +20,8 @@ runApp('App')
 ## Web application
 
 The app is also available directly on the web [here](https://jdobarreiro.shinyapps.io/Airbnb-Analysis-ECE/)
+
+## Contributors
+
+Jonathan BOUTAKHOT
+Jordan DO BARREIRO
