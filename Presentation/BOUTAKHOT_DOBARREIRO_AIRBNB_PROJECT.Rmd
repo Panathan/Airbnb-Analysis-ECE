@@ -28,9 +28,8 @@ from 3 differents countries : France, Spain, and Belgium
 We can acquire a lot of data from many cities from their website <http://insideairbnb.com/get-the-data.html>
 
 ## Data Preprocessing
-We read the data from the urls.csv file, then split the features, 
+We read the data from the urls.csv file, then split the features, then apply our filters then it is loaded 
 ```R
-  #read from .csv file
   urls_path <- file.path("./Data/all_data_urls.csv")
   print(paste0("reading data from ", urls_path))
   urls_df <- read.csv(urls_path)
@@ -43,11 +42,10 @@ We read the data from the urls.csv file, then split the features,
   urls_df$date <- urls_features[,7]
 ```
 
-## Some modifications..
-
-We apply the filters, and then it is loaded
+## Some filters
+We apply our filters, and then it is loaded !
 ```R
-  #apply filters : 3 different countries (france without paris, spain, belgium) and the last 3 available scraping dates of data
+#apply filters : 3 different countries (france without paris, spain, belgium) and the last 3 available scraping dates of data
   urls_df <- urls_df %>%
     filter(country %in% c("france","spain","belgium")) %>%
     filter(city !="paris")
@@ -59,26 +57,39 @@ We apply the filters, and then it is loaded
   return(urls_df)
 ```
 
-## Tab1 - overview
 
-```{r cars, echo = TRUE}
+## Tab1 - Overview
 
-```
+![Tab 1 (Analysis 1 – Comparing cities)](../Presentation/img/1.png){width=500px}
 
-![Tab 1 (Analysis 1 – Comparing cities)](../Presentation/img/1.png)
-![Price over 30 days for multiple cities](../Presentation/img/2.png)
-![Price over 30 days for the same cities but we date range changed](../Presentation/img/3.png)
-![Availability over 30 days depending on the room type](../Presentation/img/4.png)
-![Revenue over 30 days](../Presentation/img/5.png)
 
-## Insights inside a city
+![Revenue over 30 days](../Presentation/img/5.png){width=500px}
 
-![ Tab 2 (Analysis 2 – Deep dive into a city)](../Presentation/img/8.png)
+## Tab1 - Comparing several cities on a feature
 
-![Price over 30 days depending on the number of bedrooms](../Presentation/img/6.png)
-![Map changes after the date changes](../Presentation/img/7.png)
 
-```{r pressure}
+![Price over 30 days for multiples cities with data range](../Presentation/img/2.png){width=800px}
 
-```
+## Tab1 - Up to two features at the same time !
+
+![Availability over 30 days depending on the room type (2 features)](../Presentation/img/4.png){width=800px}
+
+## Tab2 - Overview
+
+![Tab2 - Overview](../Presentation/img/9.png){width=450px}
+
+## Tab2 - City insights with an additionnal map
+
+![Price over 30 days depending on the number of bedrooms in Lyon](../Presentation/img/6.png){width=800px}
+
+## Conclusion
+
+Finally, this project was realised thanks to our courses in Data Analytics, and it gave us the opportunity to practice 
+the R programming language, combined to an Shiny application to make a interactive user interface in real time.
+
+We are not experts, even if we are only a group of 2 people, we tried our best and we really enjoyed learning a lot of things through the realisation of this project.
+
+We may want to improve our competence again and again, and to practice more and more, to do in the future a better job.
+
+Thank you for your listening !
 
