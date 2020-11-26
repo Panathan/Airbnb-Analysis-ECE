@@ -11,15 +11,10 @@ shinyUI(fluidPage(
                            uiOutput("features1"),
                            uiOutput("more_features1"),
                            uiOutput("date_range"),
-                           uiOutput("plot_type"),
+                           uiOutput("plot_type")
                          ),
                          mainPanel(
-                           h3("Comparing"),
-                           textOutput("selected_cities1"),
-                           textOutput("date_range_text"),
-                           textOutput("start_date"),
-                           textOutput("end_date"),
-                           plotOutput("output_plot"),
+                           plotOutput("output_plot")
                          )
                        )
               ),
@@ -28,9 +23,12 @@ shinyUI(fluidPage(
                          sidebarPanel(
                            uiOutput("cities2"),
                            uiOutput("features2"),
-                           uiOutput("more_features2")
+                           uiOutput("more_features2"),
+                           uiOutput("date_range2"),
+                           uiOutput("plot_type2")
                          ),
                          mainPanel(
+                           plotOutput("output_plot2"),
                            leafletOutput("map")
                          )
                        )
