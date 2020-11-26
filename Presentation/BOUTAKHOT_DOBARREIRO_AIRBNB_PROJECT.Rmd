@@ -59,18 +59,18 @@ We apply the filters, and then it is loaded
   return(urls_df)
 ```
 
-## Cities comparisons
+## Tab1 - overview
 
 ```{r cars, echo = TRUE}
 
 ```
 
-![Tab 1 (Analysis 1 – Comparing cities)](capture.png)
+![Tab 1 (Analysis 1 – Comparing cities)](img/capture.png)
 
 
 ## Insights inside a city
 
-![ Tab 2 (Analysis 2 – Deep dive into a city)](capture.png)
+![ Tab 2 (Analysis 2 – Deep dive into a city)](img/capture.png)
 
 
 ```{r pressure}
