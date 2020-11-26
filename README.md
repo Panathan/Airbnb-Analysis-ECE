@@ -8,9 +8,9 @@ This is a R Project
   * Set your working directory
 ```
 library(shiny)
-setwd("~/YOUR_PATH/Airbnb-Analysis-ShinyApp")
+setwd("~/YOUR_PATH/Airbnb-Analysis-ECE")
 ```
-  * In the file prepare_data.R, uncomment the line 83 "dl_data()"
+  * In the file data_preparation.R, uncomment the line 83 "dl_data()"
 1. Launch the App 
 ```
 runApp('App')
