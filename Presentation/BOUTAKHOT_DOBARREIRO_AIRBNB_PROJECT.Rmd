@@ -1,6 +1,6 @@
 ---
 title: "Airbnb Data Analysis Project"
-author: "BOUTAKHOT Jonathan and DO-BARREIRO Jordan"
+author: "BOUTAKHOT Jonathan and DO BARREIRO Jordan"
 date: "25/11/2020"
 output: ioslides_presentation
 ---
@@ -17,7 +17,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 Our team is composed of only 2 members : 
 
-BOUTAKHOT Jonathan and DO-BARREIRO Jordan
+BOUTAKHOT Jonathan and DO BARREIRO Jordan
 
 We are both in our last year of engineering school in ECE Paris, and this is our Airbnb Data Analysis Project
 
