@@ -1,4 +1,4 @@
-### Airbnb-Analysis-ECE
+# Airbnb-Analysis-ECE
 
 This is a R Project done for the Data Analytics class
 
